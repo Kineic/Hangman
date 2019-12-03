@@ -12,6 +12,7 @@ public class PlayHangman {
 		//6.Add the logic to keep track of wrong letters so they don't lose points for guessing the same letter twice.
 		//7.After that, you can keep track of how many wrong guesses and end the game if they lose.
 		//8.Finally, detect when they have guessed all the letters and let them know they've won!
+		//Pushing to test if I set the git up correctly.
 	}
 
 }
