@@ -28,12 +28,14 @@ public class PlayHangman {
 	public static void startPlayingHangman() {
 		ArrayList<String> movieList = convertingTextFileToAStringArrayList();
 		String movieChoice = choosingARandomMovieFromTheListArray(movieList);
+		String movieChoiceWithWhitespaceAfterEveryLetter = addingWhitespaceAfterEveryCharInMovieChoice(movieChoice);
 		String movieUnderscore = convertingMovieArrayToUnderscoreArray(movieChoice);
 		printOutUnderscoreMovieToScreen(movieUnderscore);
 		String userGuess = checkWhatTheUsersGuessIs();
-		char[] movieChoiceChar = convertingStringToCharArray(movieChoice);
+		char[] movieChoiceUnderscoreChar = convertingStringToCharArray(movieUnderscore);
+		char[] movieChoiceChar = convertingStringToCharArray(movieChoiceWithWhitespaceAfterEveryLetter);
 		char[] userGuessChar = convertingStringToCharArray(userGuess);
-		String movieListWithUserLetter = checkingIfUserInputMatchesALetterInTheMovieTitle(userGuessChar, movieChoiceChar, movieUnderscore);
+		String movieListWithUserLetter = checkingIfUserInputMatchesALetterInTheMovieTitle(userGuessChar, movieChoiceChar, movieChoiceUnderscoreChar);
 		System.out.println(movieListWithUserLetter);
 	}
 	
@@ -94,6 +96,14 @@ public class PlayHangman {
 		String movieChoice = movieList.get(rand - 1);
 		
 		return movieChoice.toLowerCase();
+	}
+	
+	//This method will add a whitespace after every letter in the String and return
+	//A new string.
+	public static String addingWhitespaceAfterEveryCharInMovieChoice(String movieChoice) {
+		movieChoice = movieChoice.replaceAll(".(?!$)", "$0 ");
+		
+		return movieChoice;
 	}
 	
 	//This method converts all of the movies in the String to underscores &
@@ -158,7 +168,7 @@ public class PlayHangman {
 	
 	//This method checks if the user input matches any of the letters that are
 	//In the movie title. Then returns a char array of the replaced letters.
-	public static String checkingIfUserInputMatchesALetterInTheMovieTitle(char[] userGuess, char[] movieChoice, String movieChoiceUnderscore) {
+	public static String checkingIfUserInputMatchesALetterInTheMovieTitle(char[] userGuess, char[] movieChoice, char[] movieChoiceUnderscore) {
 		int position = 0;
 		
 		String noFoundLetter = "Your letter didn't match.";
@@ -169,9 +179,8 @@ public class PlayHangman {
 		
 		for(int i = 0; i < movieChoice.length; i++) {
 			if(userGuess[0] == movieChoice[i]) {
-				System.out.println("You found a letter");
 				position = i;
-				movieListWithUserLetter = replaceUnderscoreWithUserInputCharacter(position, userGuess, movieChoiceUnderscore);
+				movieListWithUserLetter = replaceUnderscoreWithUserInputCharacter(position, userGuess, movieChoiceUnderscore, movieChoice);
 			}else {
 				incorrect++;
 			}
@@ -189,12 +198,16 @@ public class PlayHangman {
 	//A character in the movie array. It then checks the original movie array for
 	//The position of that character and replaces the underscore with the users
 	//Inputed character choice.
-	public static String replaceUnderscoreWithUserInputCharacter(int position, char[] userGuessChar, String movieUnderscore) {
+	public static String replaceUnderscoreWithUserInputCharacter(int position, char[] userGuessChar, char[] movieChoiceUnderscore, char[] movieChoice) {
 		char userGuess = userGuessChar[0];
 		
-		String movieUnderscoreLetter = movieUnderscore.replace(movieUnderscore.charAt(position + 1), userGuess);
+		movieChoiceUnderscore[position] = userGuess;
 		
-		return movieUnderscoreLetter;
+		//checkIfUserGuessWasAlreadyEntered();//This needs to be added in order to progress.
+		
+		String movieChoiceUpdate = new String(movieChoiceUnderscore);
+		
+		return movieChoiceUpdate;
 	}
 	
 	//This method will check if the user has already input the guess into the game
