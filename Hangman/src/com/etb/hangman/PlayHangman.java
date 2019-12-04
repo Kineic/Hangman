@@ -26,14 +26,18 @@ public class PlayHangman {
 	}
 	
 	public static void startPlayingHangman() {
-		ArrayList<String> movieList = convertingTextFileToAStringArray();
+		ArrayList<String> movieList = convertingTextFileToAStringArrayList();
 		String movieChoice = choosingARandomMovieFromTheListArray(movieList);
 		String movieUnderscore = convertingMovieArrayToUnderscoreArray(movieChoice);
-		System.out.println(movieUnderscore);
+		printOutUnderscoreMovieToScreen(movieUnderscore);
+		String userGuess = checkWhatTheUserInput();
+		char[] movieChoiceChar = convertingStringToCharArray(movieChoice);
+		char[] userGuessChar = convertingStringToCharArray(userGuess);
+		int letterFound = checkingIfUserInputMatchesALetterInTheMovieTitle(userGuessChar, movieChoiceChar, movieUnderscore);
 	}
 	
 	//This method will convert a text file into an Array List <String> & return it back.
-	public static ArrayList<String> convertingTextFileToAStringArray() {
+	public static ArrayList<String> convertingTextFileToAStringArrayList() {
 		FileReader fr = null;
 		
 		try {
@@ -82,7 +86,7 @@ public class PlayHangman {
 		int rand = 0;
 		
 		while (true){
-		    rand = random.nextInt(numberRange + 2);
+		    rand = random.nextInt(numberRange + 1);
 		    if(rand !=0) break;
 		}
 		
@@ -94,18 +98,22 @@ public class PlayHangman {
 	//This method converts all of the movies in the String to underscores &
 	//Replaces whitespaces with two white spaces. Then returns the String back.
 	public static String convertingMovieArrayToUnderscoreArray(String movie) {
-		String movieUnderscore = new String(movie);
+		String movieUnderscore = "";
 		
-		for(int i = 0; i < movieUnderscore.length(); i++) {
+		for(int i = 0; i < movie.length(); i++) {
 			
-			if(movieUnderscore.charAt(i) == ' ') {
-				movieUnderscore = movieUnderscore.replace(movieUnderscore.charAt(i), '/');
+			if(movie.charAt(i) == ' ') {
+				movieUnderscore += "  ";
 			}else {
-				movieUnderscore = movieUnderscore.replace(movieUnderscore.charAt(i), '_');
+				movieUnderscore += "_ ";;
 			}
 		}
 		
 		return movieUnderscore;
+	}
+	
+	public static void printOutUnderscoreMovieToScreen(String movieUnderscore) {
+		System.out.println(movieUnderscore);
 	}
 	
 	//This method looks at what the user inputed for their choice and
@@ -121,23 +129,54 @@ public class PlayHangman {
 		while(exit) {
 			try {
 				System.out.println("Please enter a guess.");
+				
 				userGuess = scanner.next();
-				if(userGuess.length() > 1) {
-					exit = false;
+				
+				if(userGuess.matches(".*\\d.*")) {
+					System.out.println("Please enter an alphabetical character.");
+				}else if(userGuess.length() < 2) {
+						exit = false;
+				}else{
+					System.out.println("Please enter one letter.");
+					scanner.nextLine();
 				}
 				
 			}catch(InputMismatchException e) {
-				System.out.println("Please enter one letter.");
-				scanner.nextLine();
+				e.printStackTrace();
 			}
 		}
 		
-		return userGuess;
+		return userGuess.toLowerCase();
+	}
+	
+	public static char[] convertingStringToCharArray(String movieChoice) {
+		char[] movieChoiceChar = movieChoice.toCharArray();
+		
+		return movieChoiceChar;
 	}
 	
 	//This method checks if the user input matches any of the letters that are
-	//In the movie title. Returns either true or false.
-	public static boolean checkingIfUserInputMatchesALetterInTheMovieTitle() {
+	//In the movie title. Then returns a char array of the replaced letters.
+	public static char[] checkingIfUserInputMatchesALetterInTheMovieTitle(char[] userGuess, char[] movieChoice, String movieChoiceUnderscore) {
+		int position = 0;
+		
+		int incorrect = 0;
+		
+		for(int i = 0; i < movieChoice.length; i++) {
+			if(userGuess[0] == movieChoice[i]) {
+				System.out.println("You found a letter");
+				position = i;
+				replaceUnderscoreWithUserInputCharacter(position, userGuess, movieChoiceUnderscore);
+			}else {
+				incorrect++;
+			}
+		}
+		
+		if(incorrect == movieChoice.length) {
+			System.out.println("You did not find any matching letters");
+			
+			
+		}
 		
 	}
 	
@@ -145,7 +184,7 @@ public class PlayHangman {
 	//A character in the movie array. It then checks the orginal movie array for
 	//The position of that character and replaces the underscore with the users
 	//Inputted character choice.
-	public static String[] replaceUnderscoreWithUserInputCharacter() {
+	public static String[] replaceUnderscoreWithUserInputCharacter(int position, char[] userGuess, String movieUnderscore) {
 		
 	}
 	
