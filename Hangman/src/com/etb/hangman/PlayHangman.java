@@ -1,5 +1,14 @@
 package com.etb.hangman;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Random;
+import java.util.Scanner;
+
 public class PlayHangman {
 
 	public static void main(String[] args) {
@@ -12,18 +21,157 @@ public class PlayHangman {
 		//6.Add the logic to keep track of wrong letters so they don't lose points for guessing the same letter twice.
 		//7.After that, you can keep track of how many wrong guesses and end the game if they lose.
 		//8.Finally, detect when they have guessed all the letters and let them know they've won!
-		//Pushing to test if I set the git up correctly.
 		
 		startPlayingHangman();
 	}
 	
 	public static void startPlayingHangman() {
+		ArrayList<String> movieList = convertingTextFileToAStringArray();
+		String movieChoice = choosingARandomMovieFromTheListArray(movieList);
+		String movieUnderscore = convertingMovieArrayToUnderscoreArray(movieChoice);
+		System.out.println(movieUnderscore);
+	}
+	
+	//This method will convert a text file into an Array List <String> & return it back.
+	public static ArrayList<String> convertingTextFileToAStringArray() {
+		FileReader fr = null;
+		
+		try {
+			fr = new FileReader("S:\\Gareth\\Gareth\\Movies.txt");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		BufferedReader br = new BufferedReader(fr);
+		
+		String currentLine = null;
+		
+		try {
+			currentLine = br.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ArrayList<String> movieList = new ArrayList<String>();
+		
+		
+		
+		while(currentLine != null){
+			movieList.add(currentLine);
+			try {
+				currentLine = br.readLine();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return movieList;
 		
 	}
 	
-	//This method will convert a text file into a string[].
-	public static String convertingTextFileToAStringArray() {
+	
+	//This method will generate a random number that will be used to select
+	//A movie from the List Array. Then return a string from the movie Array List.
+	public static String choosingARandomMovieFromTheListArray(ArrayList<String> movieList) {
+		int numberRange = movieList.size();
+		
+		Random random = new Random();
+		
+		int rand = 0;
+		
+		while (true){
+		    rand = random.nextInt(numberRange + 2);
+		    if(rand !=0) break;
+		}
+		
+		String movieChoice = movieList.get(rand - 1);
+		
+		return movieChoice;
+	}
+	
+	//This method converts all of the movies in the String to underscores &
+	//Replaces whitespaces with two white spaces. Then returns the String back.
+	public static String convertingMovieArrayToUnderscoreArray(String movie) {
+		String movieUnderscore = new String(movie);
+		
+		for(int i = 0; i < movieUnderscore.length(); i++) {
+			
+			if(movieUnderscore.charAt(i) == ' ') {
+				movieUnderscore = movieUnderscore.replace(movieUnderscore.charAt(i), '/');
+			}else {
+				movieUnderscore = movieUnderscore.replace(movieUnderscore.charAt(i), '_');
+			}
+		}
+		
+		return movieUnderscore;
+	}
+	
+	//This method looks at what the user inputed for their choice and
+	//Returns back a character that they entered.
+	public static String checkWhatTheUserInput() {
+		@SuppressWarnings("resource")
+		Scanner scanner =  new Scanner(System.in);
+		
+		String userGuess = "";
+		
+		boolean exit = true;
+		
+		while(exit) {
+			try {
+				System.out.println("Please enter a guess.");
+				userGuess = scanner.next();
+				if(userGuess.length() > 1) {
+					exit = false;
+				}
+				
+			}catch(InputMismatchException e) {
+				System.out.println("Please enter one letter.");
+				scanner.nextLine();
+			}
+		}
+		
+		return userGuess;
+	}
+	
+	//This method checks if the user input matches any of the letters that are
+	//In the movie title. Returns either true or false.
+	public static boolean checkingIfUserInputMatchesALetterInTheMovieTitle() {
 		
 	}
-
+	
+	//This method will run when the user has entered a character that matches a
+	//A character in the movie array. It then checks the orginal movie array for
+	//The position of that character and replaces the underscore with the users
+	//Inputted character choice.
+	public static String[] replaceUnderscoreWithUserInputCharacter() {
+		
+	}
+	
+	//This method will check if the user has already input the guess into the game
+	//& returns true if they have already used that character or false else wise.
+	public static boolean checkIfUserGuessWasAlreadyEntered() {
+		
+	}
+	
+	//This method will add an incorrect guess to the players score to show them that
+	//They entered a character into the game that doesn't match a character in the
+	//movie.
+	public static int addWrongChoiceToPlayerScore() {
+		
+	}
+	
+	//This method will run when the user has guessed wrong 10 times, it will tell them
+	//That they entered too many incorrect characters.
+	public static void gameOverYouLose() {
+		
+	}
+	
+	//This method will run when the user has entered all characters into the array and
+	//Guessed correctly.
+	public static void gameOverYouWin() {
+		
+	}
+	
 }
