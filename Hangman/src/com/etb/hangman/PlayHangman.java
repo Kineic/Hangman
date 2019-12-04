@@ -13,6 +13,17 @@ public class PlayHangman {
 		//7.After that, you can keep track of how many wrong guesses and end the game if they lose.
 		//8.Finally, detect when they have guessed all the letters and let them know they've won!
 		//Pushing to test if I set the git up correctly.
+		
+		startPlayingHangman();
+	}
+	
+	public static void startPlayingHangman() {
+		
+	}
+	
+	//This method will convert a text file into a string[].
+	public static String convertingTextFileToAStringArray() {
+		
 	}
 
 }
