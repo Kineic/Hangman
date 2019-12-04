@@ -30,10 +30,11 @@ public class PlayHangman {
 		String movieChoice = choosingARandomMovieFromTheListArray(movieList);
 		String movieUnderscore = convertingMovieArrayToUnderscoreArray(movieChoice);
 		printOutUnderscoreMovieToScreen(movieUnderscore);
-		String userGuess = checkWhatTheUserInput();
+		String userGuess = checkWhatTheUsersGuessIs();
 		char[] movieChoiceChar = convertingStringToCharArray(movieChoice);
 		char[] userGuessChar = convertingStringToCharArray(userGuess);
-		int letterFound = checkingIfUserInputMatchesALetterInTheMovieTitle(userGuessChar, movieChoiceChar, movieUnderscore);
+		String movieListWithUserLetter = checkingIfUserInputMatchesALetterInTheMovieTitle(userGuessChar, movieChoiceChar, movieUnderscore);
+		System.out.println(movieListWithUserLetter);
 	}
 	
 	//This method will convert a text file into an Array List <String> & return it back.
@@ -41,7 +42,7 @@ public class PlayHangman {
 		FileReader fr = null;
 		
 		try {
-			fr = new FileReader("S:\\Gareth\\Gareth\\Movies.txt");
+			fr = new FileReader("D:\\Work\\Code\\Java\\Hangman Game - Assessment\\movies.txt");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -86,17 +87,17 @@ public class PlayHangman {
 		int rand = 0;
 		
 		while (true){
-		    rand = random.nextInt(numberRange + 1);
+		    rand = random.nextInt(numberRange);
 		    if(rand !=0) break;
 		}
 		
 		String movieChoice = movieList.get(rand - 1);
 		
-		return movieChoice;
+		return movieChoice.toLowerCase();
 	}
 	
 	//This method converts all of the movies in the String to underscores &
-	//Replaces whitespaces with two white spaces. Then returns the String back.
+	//Replaces whitespace with two white spaces. Then returns the String back.
 	public static String convertingMovieArrayToUnderscoreArray(String movie) {
 		String movieUnderscore = "";
 		
@@ -118,7 +119,7 @@ public class PlayHangman {
 	
 	//This method looks at what the user inputed for their choice and
 	//Returns back a character that they entered.
-	public static String checkWhatTheUserInput() {
+	public static String checkWhatTheUsersGuessIs() {
 		@SuppressWarnings("resource")
 		Scanner scanner =  new Scanner(System.in);
 		
@@ -157,8 +158,12 @@ public class PlayHangman {
 	
 	//This method checks if the user input matches any of the letters that are
 	//In the movie title. Then returns a char array of the replaced letters.
-	public static char[] checkingIfUserInputMatchesALetterInTheMovieTitle(char[] userGuess, char[] movieChoice, String movieChoiceUnderscore) {
+	public static String checkingIfUserInputMatchesALetterInTheMovieTitle(char[] userGuess, char[] movieChoice, String movieChoiceUnderscore) {
 		int position = 0;
+		
+		String noFoundLetter = "Your letter didn't match.";
+		
+		String movieListWithUserLetter = "";
 		
 		int incorrect = 0;
 		
@@ -166,7 +171,7 @@ public class PlayHangman {
 			if(userGuess[0] == movieChoice[i]) {
 				System.out.println("You found a letter");
 				position = i;
-				replaceUnderscoreWithUserInputCharacter(position, userGuess, movieChoiceUnderscore);
+				movieListWithUserLetter = replaceUnderscoreWithUserInputCharacter(position, userGuess, movieChoiceUnderscore);
 			}else {
 				incorrect++;
 			}
@@ -174,18 +179,22 @@ public class PlayHangman {
 		
 		if(incorrect == movieChoice.length) {
 			System.out.println("You did not find any matching letters");
-			
-			
+			return noFoundLetter;
 		}
 		
+		return movieListWithUserLetter;
 	}
 	
 	//This method will run when the user has entered a character that matches a
-	//A character in the movie array. It then checks the orginal movie array for
+	//A character in the movie array. It then checks the original movie array for
 	//The position of that character and replaces the underscore with the users
-	//Inputted character choice.
-	public static String[] replaceUnderscoreWithUserInputCharacter(int position, char[] userGuess, String movieUnderscore) {
+	//Inputed character choice.
+	public static String replaceUnderscoreWithUserInputCharacter(int position, char[] userGuessChar, String movieUnderscore) {
+		char userGuess = userGuessChar[0];
 		
+		String movieUnderscoreLetter = movieUnderscore.replace(movieUnderscore.charAt(position + 1), userGuess);
+		
+		return movieUnderscoreLetter;
 	}
 	
 	//This method will check if the user has already input the guess into the game
