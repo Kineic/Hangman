@@ -24,6 +24,7 @@ public class PlayHangman {
 		startPlayingHangman();
 	}
 	
+	//This is the method that holds all the other methods that make the game run
 	public static void startPlayingHangman() {
 		ArrayList<String> movieList = convertingTextFileToAStringArrayList();
 		
@@ -187,15 +188,15 @@ public class PlayHangman {
 	}
 	
 	
-	static String usedLetters = "";
+	static String usedLetters = ""; //This keeps the running imput of the users guesses
 	
-	static String usedLettersPlusInfo = "";
+	static String usedLettersPlusInfo = ""; //This is what is printed out to the user after every guess
 	
-	static String movieChoiceUnderscoreString = "";
+	static String movieChoiceUnderscoreString = ""; //This is what gets returned from the checkingIfUserInputMatchesALetterInTheMovieTitle
 	
-	static char[] movieListUpdate;
+	static char[] movieListUpdate; //This stores the users guesses if it is correct, starts of as a null until user guesses one letter correct
 	
-	static int count = 0;
+	static int count = 0; //This is the users running count, if they get 10 wrong, the game ends in a loss
 	
 	//This method checks if the user input matches any of the letters that are
 	//In the movie title. Then returns a char array of the replaced letters.
