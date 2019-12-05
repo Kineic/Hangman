@@ -40,7 +40,13 @@ public class PlayHangman {
 		
 		boolean exit = true;
 		
+		int runningCount = 0;
+		
 		do {
+			if(runningCount < 1) {
+				printToScreen(movieListWithUserLetter);
+			}
+			
 			String userGuess = checkWhatTheUsersGuessIs();
 			
 			char[] movieChoiceUnderscoreChar = convertingStringToCharArray(movieUnderscore);
@@ -51,7 +57,11 @@ public class PlayHangman {
 			
 			movieListWithUserLetter = checkingIfUserInputMatchesALetterInTheMovieTitle(userGuessChar, movieChoiceChar, movieChoiceUnderscoreChar, movieListWithUserLetter);
 			
-			System.out.println(movieListWithUserLetter);
+			if(runningCount == 1) {
+				System.out.println(movieListWithUserLetter);
+			}
+			
+			runningCount = 1;
 			
 			if(gameOverYouWin(movieListWithUserLetter)){
 				System.out.println("Congrats! You won!");
@@ -300,9 +310,9 @@ public class PlayHangman {
 		boolean isFound = movie.contains("_");
 		
 		if(isFound) {
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
 	
 }
