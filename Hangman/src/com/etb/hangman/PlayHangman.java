@@ -311,6 +311,11 @@ public class PlayHangman {
 		
 		if(isFound) {
 			return false;
+		}else if(movie.length() == 18) {
+			if(movie.charAt(17) == ',') {
+				return false;
+			}
+			
 		}
 		return true;
 	}
