@@ -157,6 +157,8 @@ public class PlayHangman {
 		System.out.println(movieUnderscore);
 	}
 	
+	static String usedLetters = ""; //This keeps the running imput of the users guesses
+	
 	//This method looks at what the user inputed for their choice and
 	//Returns back a character that they entered.
 	public static String checkWhatTheUsersGuessIs() {
@@ -169,10 +171,12 @@ public class PlayHangman {
 		
 		while(exit) {
 			try {
+				do {
 				System.out.println("Please enter a guess.");
 				
 				userGuess = scanner.next();
 				
+				}while(checkIfUserGuessWasAlreadyEntered(userGuess, usedLetters));
 				if(userGuess.matches(".*\\d.*")) {
 					System.out.println("Please enter an alphabetical character.");
 				}else if(userGuess.length() < 2) {
@@ -197,9 +201,6 @@ public class PlayHangman {
 		return movieChoiceChar;
 	}
 	
-	
-	static String usedLetters = ""; //This keeps the running imput of the users guesses
-	
 	static String usedLettersPlusInfo = ""; //This is what is printed out to the user after every guess
 	
 	static String movieChoiceUnderscoreString = ""; //This is what gets returned from the checkingIfUserInputMatchesALetterInTheMovieTitle
@@ -217,6 +218,8 @@ public class PlayHangman {
 		
 		int incorrect = 0;
 		
+		usedLetters += (userGuessString + ", ");
+		
 		for(int i = 0; i < movieChoice.length; i++) {
 			if(userGuess[0] == movieChoice[i]) {
 				position = i;
@@ -233,13 +236,11 @@ public class PlayHangman {
 		if(incorrect == movieChoice.length) {
 			System.out.println("You did not find any matching letters");
 			
-			usedLetters += (userGuessString + ", ");
-			
 			usedLettersPlusInfo = "\nUSED LETTERS = " + usedLetters + "\n";
 			
-			return usedLettersPlusInfo;
+			return movieChoiceUnderscoreString;
 		}
-		usedLetters += (userGuessString + ", ");
+		
 		
 		System.out.println("\nUSED LETTERS = " + usedLetters + "\n");
 		
@@ -252,41 +253,30 @@ public class PlayHangman {
 	//Inputed character choice.
 	public static char[] replaceUnderscoreWithUserInputCharacter(int position, char[] userGuessChar, char[] movieChoiceUnderscore, char[] movieChoice, char[] movieListUpdate, int count) {
 		char userGuess = userGuessChar[0];
-		
-		if(checkIfUserGuessWasNotAlreadyEntered(position, movieChoiceUnderscore, userGuess, movieListUpdate, count)) {
 			
-			for(int i = 0; i < movieChoiceUnderscore.length; i++) {
-				if(movieListUpdate != null) {
-					movieListUpdate[position] = userGuess;
-					
-					return movieListUpdate;
-				}
+		for(int i = 0; i < movieChoiceUnderscore.length; i++) {
+			if(movieListUpdate != null) {
+				movieListUpdate[position] = userGuess;
+				
+				return movieListUpdate;
 			}
-			
-			movieChoiceUnderscore[position] = userGuess;
-			
-			return movieChoiceUnderscore;
 		}
-		
+			
+		movieChoiceUnderscore[position] = userGuess;
+			
 		return movieChoiceUnderscore;
 	}
 	
 	//This method will check if the user has already input the guess into the game
 	//& returns true if they have already used that character or false else wise.
-	public static boolean checkIfUserGuessWasNotAlreadyEntered(int position, char[] movieChoiceUnderscore, char userGuess, char[] movieListUpdate, int count) {
-		if(movieListUpdate != null) {
-			for(int i = 0; i < movieChoiceUnderscore.length; i++) {
-				if(movieListUpdate[i] == userGuess) {
-					count++;
-				}
-			}
-		
-			//return false;
+	public static boolean checkIfUserGuessWasAlreadyEntered(String userGuess, String usedLetters) {
+		if(usedLetters.contains(userGuess)) {
+			System.out.println("You have already used letter " + userGuess + ". Enter a new letter");
+			
+			return true;
 		}
 		
-		
-		
-		return true;
+		return false;
 	}
 	
 	//This method will add an incorrect guess to the players score to show them that
@@ -311,12 +301,10 @@ public class PlayHangman {
 		
 		if(isFound) {
 			return false;
-		}else if(movie.length() == 18) {
-			if(movie.charAt(17) == ',') {
-				return false;
-			}
-			
+		}else if(movie.contains(",")) {
+			return false;
 		}
+		
 		return true;
 	}
 	
