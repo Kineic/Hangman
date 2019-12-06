@@ -63,6 +63,8 @@ public class PlayHangman {
 			
 			runningCount = 1;
 			
+			addWrongChoiceToPlayerScore();
+			
 			if(gameOverYouWin(movieListWithUserLetter)){
 				System.out.println("Congrats! You won!");
 			}
@@ -238,9 +240,14 @@ public class PlayHangman {
 			
 			usedLettersPlusInfo = "\nUSED LETTERS = " + usedLetters + "\n";
 			
+			count++;
+			
+			System.out.println("Guesses Wrong: " + count);
+			
 			return movieChoiceUnderscoreString;
 		}
 		
+		System.out.println("Guesses Wrong: " + count);
 		
 		System.out.println("\nUSED LETTERS = " + usedLetters + "\n");
 		
@@ -282,7 +289,7 @@ public class PlayHangman {
 	//This method will add an incorrect guess to the players score to show them that
 	//They entered a character into the game that doesn't match a character in the
 	//movie.
-	public static void addWrongChoiceToPlayerScore(int count) {
+	public static void addWrongChoiceToPlayerScore() {
 		if(count == 10) {
 			gameOverYouLose();
 		}
@@ -297,11 +304,9 @@ public class PlayHangman {
 	//This method will run when the user has entered all characters into the array and
 	//Guessed correctly.
 	public static boolean gameOverYouWin(String movie) {
-		boolean isFound = movie.contains("_");
-		
-		if(isFound) {
+		if(movie == "") {
 			return false;
-		}else if(movie.contains(",")) {
+		}else if(movie.contains("_")) {
 			return false;
 		}
 		
