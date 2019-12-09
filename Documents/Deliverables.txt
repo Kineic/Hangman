@@ -1,0 +1,4 @@
+1: The code for the game itself.
+2: Test documentation.
+3:User documentation. //top 5 frequency letters are "a, t, a, o, i"
+4:Technical Documentation.
