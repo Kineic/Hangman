@@ -63,7 +63,7 @@ public class PlayHangman {
 			
 			runningCount = 1;
 			
-			addWrongChoiceToPlayerScore();
+			addWrongChoiceToPlayerScore(movieChoice);
 			
 			if(gameOverYouWin(movieListWithUserLetter)){
 				System.out.println("Congrats! You won!");
@@ -78,7 +78,8 @@ public class PlayHangman {
 		try {
 			fr = new FileReader("S:\\Gareth\\Gareth\\Movies.txt");
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("File not found");
+			System.exit(0);
 		}
 		
 		BufferedReader br = new BufferedReader(fr);
@@ -181,6 +182,8 @@ public class PlayHangman {
 				}while(checkIfUserGuessWasAlreadyEntered(userGuess, usedLetters));
 				if(userGuess.matches(".*\\d.*")) {
 					System.out.println("Please enter an alphabetical character.");
+				}else if(userGuess.matches("[^\\w\\s]")){
+					System.out.println("Please enter an alphabetical character.");
 				}else if(userGuess.length() < 2) {
 						exit = false;
 				}else{
@@ -242,7 +245,9 @@ public class PlayHangman {
 			
 			count++;
 			
-			System.out.println("Guesses Wrong: " + count);
+			System.out.println("Guesses Wrong: " + count + "\n");
+			
+			System.out.println("\nUSED LETTERS = " + usedLetters + "\n");
 			
 			return movieChoiceUnderscoreString;
 		}
@@ -289,16 +294,18 @@ public class PlayHangman {
 	//This method will add an incorrect guess to the players score to show them that
 	//They entered a character into the game that doesn't match a character in the
 	//movie.
-	public static void addWrongChoiceToPlayerScore() {
+	public static void addWrongChoiceToPlayerScore(String movieChoice) {
 		if(count == 10) {
-			gameOverYouLose();
+			gameOverYouLose(movieChoice);
 		}
 	}
 	
 	//This method will run when the user has guessed wrong 10 times, it will tell them
 	//That they entered too many incorrect characters.
-	public static void gameOverYouLose() {
+	public static void gameOverYouLose(String movieChoice) {
 		System.out.println("Sorry, you lose :(");
+		
+		System.out.println("\n\nThe movie was " + movieChoice);
 	}
 	
 	//This method will run when the user has entered all characters into the array and
