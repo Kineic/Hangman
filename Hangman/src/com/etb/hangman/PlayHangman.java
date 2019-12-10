@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 // TODO: Auto-generated Javadoc
 /**
+ * @author Gareth Craig
  * The Class PlayHangman.
  */
 public class PlayHangman {
