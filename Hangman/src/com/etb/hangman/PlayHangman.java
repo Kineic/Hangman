@@ -12,7 +12,7 @@ import java.util.Scanner;
 // TODO: Auto-generated Javadoc
 /**
  * @author Gareth Craig
- * The Class PlayHangman.
+ * 
  */
 public class PlayHangman {
 
@@ -257,25 +257,25 @@ public class PlayHangman {
 		return movieChoiceChar;
 	}
 	
-	/** The used letters plus info. */
+	/** The used letters, plus info. */
 	//This is what is printed out to the user after every guess
 	static String usedLettersPlusInfo = ""; 
 	
-	/** The movie choice underscore string. */
+	/** The movie choice underscore String. */
 	//This is what gets returned from the checkingIfUserInputMatchesALetterInTheMovieTitle
 	static String movieChoiceUnderscoreString = ""; 
 	
-	/** The movie list update. */
+	/** The movie list updated with successful guesses. */
 	//This stores the users guesses if it is correct, starts of as a null until user guesses one letter correct
 	static char[] movieListUpdate; 
 	
-	/** The count. */
+	/** The count that keeps tract of users wrong guesses. */
 	//This is the users running count, if they get 10 wrong, the game ends in a loss
 	static int count = 0; 
 	
 	
 	/**
-	 * Checking if user input matches A letter in the movie title.
+	 * Checking if user input matches a letter in the movie title.
 	 *
 	 * @param userGuess the user guess
 	 * @param movieChoice the movie choice
@@ -381,14 +381,14 @@ public class PlayHangman {
 	
 	
 	/**
-	 * Adds the wrong choice to player score.
+	 * Check the users mistakes.
 	 *
 	 * @param movieChoice the movie choice
 	 */
 	//This method will add an incorrect guess to the players score to show them that
 	//They entered a character into the game that doesn't match a character in the
 	//movie.
-	public static void addWrongChoiceToPlayerScore(String movieChoice) {
+	public static void checkUserMistakes(String movieChoice) {
 		if(count == 10) {
 			gameOverYouLose(movieChoice);
 		}
