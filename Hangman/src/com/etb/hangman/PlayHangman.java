@@ -12,15 +12,6 @@ import java.util.Scanner;
 public class PlayHangman {
 
 	public static void main(String[] args) {
-		//1.Write some code that will simply read the movie list and display the whole list.
-		//2.Then add to your code to randomly pick one movie and display that title only.
-		//3.Then convert its letters to underscores (_) and display that instead, and so on.
-		//4.Once you've got that part done start reading the user's input and search for it in the title.
-		//5.Work on revealing the correct letters and displaying them.
-		//6.Add the logic to keep track of wrong letters so they don't lose points for guessing the same letter twice.
-		//7.After that, you can keep track of how many wrong guesses and end the game if they lose.
-		//8.Finally, detect when they have guessed all the letters and let them know they've won!
-		
 		startPlayingHangman();
 	}
 	
@@ -40,7 +31,8 @@ public class PlayHangman {
 		
 		boolean exit = true;
 		
-		int runningCount = 0;
+		int runningCount = 0;	//This is here because the first printToScreen is not populated until the checkingIfUserInput
+								//MatchesALetterInTheMovieTitle is run.
 		
 		do {
 			if(runningCount < 1) {
@@ -63,7 +55,7 @@ public class PlayHangman {
 			
 			runningCount = 1;
 			
-			addWrongChoiceToPlayerScore(movieChoice);
+			addWrongChoiceToPlayerScore(movieChoice);	//Checks if user mistakes are equal to 10.
 			
 			if(gameOverYouWin(movieListWithUserLetter)){
 				System.out.println("Congrats! You won!");
@@ -160,7 +152,7 @@ public class PlayHangman {
 		System.out.println(movieUnderscore);
 	}
 	
-	static String usedLetters = ""; //This keeps the running imput of the users guesses
+	static String usedLetters = ""; //This keeps the running input of the users guesses
 	
 	//This method looks at what the user inputed for their choice and
 	//Returns back a character that they entered.
@@ -180,11 +172,11 @@ public class PlayHangman {
 				userGuess = scanner.next();
 				
 				}while(checkIfUserGuessWasAlreadyEntered(userGuess, usedLetters));
-				if(userGuess.matches(".*\\d.*")) {
+				if(userGuess.matches(".*\\d.*")) {									//If input matches a number.
 					System.out.println("Please enter an alphabetical character.");
-				}else if(userGuess.matches("[^\\w\\s]")){
+				}else if(userGuess.matches("[^\\w\\s]")){							//If input matches a non-alphamumerical character.
 					System.out.println("Please enter an alphabetical character.");
-				}else if(userGuess.length() < 2) {
+				}else if(userGuess.length() < 2) {									//If input is less than 2.
 						exit = false;
 				}else{
 					System.out.println("Please enter one letter.");
