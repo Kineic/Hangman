@@ -9,12 +9,24 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PlayHangman.
+ */
 public class PlayHangman {
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		startPlayingHangman();
 	}
 	
+	/**
+	 * Start playing hangman.
+	 */
 	//This is the method that holds all the other methods that make the game run
 	public static void startPlayingHangman() {
 		ArrayList<String> movieList = convertingTextFileToAStringArrayList();
@@ -63,6 +75,12 @@ public class PlayHangman {
 		}while(exit);
 	}
 	
+
+	/**
+	 * Converting text file to A string array list.
+	 *
+	 * @return the array list
+	 */
 	//This method will convert a text file into an Array List <String> & return it back.
 	public static ArrayList<String> convertingTextFileToAStringArrayList() {
 		FileReader fr = null;
@@ -104,6 +122,13 @@ public class PlayHangman {
 	}
 	
 	
+	
+	/**
+	 * Choosing A random movie from the list array.
+	 *
+	 * @param movieList the movie list
+	 * @return the string
+	 */
 	//This method will generate a random number that will be used to select
 	//A movie from the List Array. Then return a string from the movie Array List.
 	public static String choosingARandomMovieFromTheListArray(ArrayList<String> movieList) {
@@ -123,6 +148,13 @@ public class PlayHangman {
 		return movieChoice.toLowerCase();
 	}
 	
+
+	/**
+	 * Adding whitespace after every char in movie choice.
+	 *
+	 * @param movieChoice the movie choice
+	 * @return the string
+	 */
 	//This method will add a whitespace after every letter in the String and return
 	//A new string.
 	public static String addingWhitespaceAfterEveryCharInMovieChoice(String movieChoice) {
@@ -131,6 +163,13 @@ public class PlayHangman {
 		return movieChoice;
 	}
 	
+	
+	/**
+	 * Converting movie array to underscore array.
+	 *
+	 * @param movie the movie
+	 * @return the string
+	 */
 	//This method converts all of the movies in the String to underscores &
 	//Replaces whitespace with two white spaces. Then returns the String back.
 	public static String convertingMovieArrayToUnderscoreArray(String movie) {
@@ -148,12 +187,25 @@ public class PlayHangman {
 		return movieUnderscore;
 	}
 	
+	/**
+	 * Prints the to screen.
+	 *
+	 * @param movieUnderscore the movie underscore
+	 */
 	public static void printToScreen(String movieUnderscore) {
 		System.out.println(movieUnderscore);
 	}
 	
-	static String usedLetters = ""; //This keeps the running input of the users guesses
+	/** The used letters. */
+	//This keeps the running input of the users guesses
+	static String usedLetters = ""; 
 	
+	
+	/**
+	 * Check what the users guess is.
+	 *
+	 * @return the string
+	 */
 	//This method looks at what the user inputed for their choice and
 	//Returns back a character that they entered.
 	public static String checkWhatTheUsersGuessIs() {
@@ -192,20 +244,44 @@ public class PlayHangman {
 		return userGuess.toLowerCase();
 	}
 	
+	/**
+	 * Converting string to char array.
+	 *
+	 * @param movieChoice the movie choice
+	 * @return the char[]
+	 */
 	public static char[] convertingStringToCharArray(String movieChoice) {
 		char[] movieChoiceChar = movieChoice.toCharArray();
 		
 		return movieChoiceChar;
 	}
 	
-	static String usedLettersPlusInfo = ""; //This is what is printed out to the user after every guess
+	/** The used letters plus info. */
+	//This is what is printed out to the user after every guess
+	static String usedLettersPlusInfo = ""; 
 	
-	static String movieChoiceUnderscoreString = ""; //This is what gets returned from the checkingIfUserInputMatchesALetterInTheMovieTitle
+	/** The movie choice underscore string. */
+	//This is what gets returned from the checkingIfUserInputMatchesALetterInTheMovieTitle
+	static String movieChoiceUnderscoreString = ""; 
 	
-	static char[] movieListUpdate; //This stores the users guesses if it is correct, starts of as a null until user guesses one letter correct
+	/** The movie list update. */
+	//This stores the users guesses if it is correct, starts of as a null until user guesses one letter correct
+	static char[] movieListUpdate; 
 	
-	static int count = 0; //This is the users running count, if they get 10 wrong, the game ends in a loss
+	/** The count. */
+	//This is the users running count, if they get 10 wrong, the game ends in a loss
+	static int count = 0; 
 	
+	
+	/**
+	 * Checking if user input matches A letter in the movie title.
+	 *
+	 * @param userGuess the user guess
+	 * @param movieChoice the movie choice
+	 * @param movieChoiceUnderscore the movie choice underscore
+	 * @param movieListWithUserLetter the movie list with user letter
+	 * @return the string
+	 */
 	//This method checks if the user input matches any of the letters that are
 	//In the movie title. Then returns a char array of the replaced letters.
 	public static String checkingIfUserInputMatchesALetterInTheMovieTitle(char[] userGuess, char[] movieChoice, char[] movieChoiceUnderscore, String movieListWithUserLetter) {
@@ -251,6 +327,17 @@ public class PlayHangman {
 		return movieChoiceUnderscoreString;
 	}
 	
+	/**
+	 * Replace underscore with user input character.
+	 *
+	 * @param position the position
+	 * @param userGuessChar the user guess char
+	 * @param movieChoiceUnderscore the movie choice underscore
+	 * @param movieChoice the movie choice
+	 * @param movieListUpdate the movie list update
+	 * @param count the count
+	 * @return the char[]
+	 */
 	//This method will run when the user has entered a character that matches a
 	//A character in the movie array. It then checks the original movie array for
 	//The position of that character and replaces the underscore with the users
@@ -271,6 +358,14 @@ public class PlayHangman {
 		return movieChoiceUnderscore;
 	}
 	
+	
+	/**
+	 * Check if user guess was already entered.
+	 *
+	 * @param userGuess the user guess
+	 * @param usedLetters the used letters
+	 * @return true, if successful
+	 */
 	//This method will check if the user has already input the guess into the game
 	//& returns true if they have already used that character or false else wise.
 	public static boolean checkIfUserGuessWasAlreadyEntered(String userGuess, String usedLetters) {
@@ -283,6 +378,12 @@ public class PlayHangman {
 		return false;
 	}
 	
+	
+	/**
+	 * Adds the wrong choice to player score.
+	 *
+	 * @param movieChoice the movie choice
+	 */
 	//This method will add an incorrect guess to the players score to show them that
 	//They entered a character into the game that doesn't match a character in the
 	//movie.
@@ -292,6 +393,12 @@ public class PlayHangman {
 		}
 	}
 	
+	
+	/**
+	 * Game over you lose.
+	 *
+	 * @param movieChoice the movie choice
+	 */
 	//This method will run when the user has guessed wrong 10 times, it will tell them
 	//That they entered too many incorrect characters.
 	public static void gameOverYouLose(String movieChoice) {
@@ -300,6 +407,13 @@ public class PlayHangman {
 		System.out.println("\n\nThe movie was " + movieChoice);
 	}
 	
+	
+	/**
+	 * Game over you win.
+	 *
+	 * @param movie the movie
+	 * @return true, if successful
+	 */
 	//This method will run when the user has entered all characters into the array and
 	//Guessed correctly.
 	public static boolean gameOverYouWin(String movie) {
