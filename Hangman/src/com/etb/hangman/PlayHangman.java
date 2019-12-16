@@ -68,7 +68,7 @@ public class PlayHangman {
 			
 			runningCount = 1;
 			
-			addWrongChoiceToPlayerScore(movieChoice);	//Checks if user mistakes are equal to 10.
+			checkUserMistakes(movieChoice);	//Checks if user mistakes are equal to 10.
 			
 			if(gameOverYouWin(movieListWithUserLetter)){
 				System.out.println("Congrats! You won!");
